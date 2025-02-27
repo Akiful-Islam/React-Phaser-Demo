@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Phaser 3 tutorial source
+phaser3-tutorial-src
