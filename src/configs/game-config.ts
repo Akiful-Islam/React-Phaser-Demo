@@ -7,10 +7,9 @@ const resolution = {
 };
 export const config: Phaser.Types.Core.GameConfig = {
     type: AUTO,
-    width: resolution.width,
-    height: resolution.height,
-
     scale: {
+        width: resolution.width,
+        height: resolution.height,
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
