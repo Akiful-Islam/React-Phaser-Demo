@@ -30,7 +30,9 @@ export class Game extends Scene {
 
     create() {
         //  A simple background for our game
-        this.add.image(360, 640, "sky");
+        const background = this.add.image(360, 640, "sky");
+
+        background.scaleY = 2.2;
 
         //  The platforms group contains the ground and the 2 ledges we can jump on
         this.platforms = this.physics.add.staticGroup();
@@ -43,6 +45,8 @@ export class Game extends Scene {
         this.platforms.create(480, 800, "ground");
         this.platforms.create(40, 650, "ground");
         this.platforms.create(720, 660, "ground");
+        this.platforms.create(600, 500, "ground");
+        this.platforms.create(400, 300, "ground");
 
         // The player and its settings
         this.player = this.physics.add.sprite(120, 900, "dude");
@@ -84,8 +88,12 @@ export class Game extends Scene {
         //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
         this.stars = this.physics.add.group({
             key: "star",
-            repeat: 5,
-            setXY: { x: 40, y: 380, stepX: Phaser.Math.Between(50, 100) },
+            repeat: 9,
+            setXY: {
+                x: Phaser.Math.Between(30, 50),
+                y: Phaser.Math.Between(70, 100),
+                stepX: Phaser.Math.Between(70, 100),
+            },
         });
 
         this.stars.children.iterate(function (child) {
@@ -99,7 +107,7 @@ export class Game extends Scene {
         this.bombs = this.physics.add.group();
 
         //  The score
-        this.scoreText = this.add.text(16, 360, "score: 0", {
+        this.scoreText = this.add.text(16, 16, "score: 0", {
             fontSize: "32px",
             color: "#000",
         });
@@ -179,7 +187,7 @@ export class Game extends Scene {
                     ? Phaser.Math.Between(400, 800)
                     : Phaser.Math.Between(0, 400);
 
-            const bomb = this.bombs.create(x, 360, "bomb");
+            const bomb = this.bombs.create(x, 100, "bomb");
             bomb.setBounce(1);
             bomb.setCollideWorldBounds(true);
             bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
