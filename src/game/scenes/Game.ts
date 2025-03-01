@@ -90,7 +90,10 @@ export class Game extends Scene {
 
         this.stars.children.iterate(function (child) {
             //  Give each star a slightly different bounce
-            child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+            (child.body as Phaser.Physics.Arcade.Body).setBounceY(
+                Phaser.Math.FloatBetween(0.4, 0.8)
+            );
+            return true;
         });
 
         this.bombs = this.physics.add.group();
@@ -98,7 +101,7 @@ export class Game extends Scene {
         //  The score
         this.scoreText = this.add.text(16, 16, "score: 0", {
             fontSize: "32px",
-            fill: "#000",
+            color: "#000",
         });
 
         //  Collide the player and the stars with the platforms
@@ -152,21 +155,30 @@ export class Game extends Scene {
         this.scene.start("GameOver");
     }
 
-    collectStar(player, star) {
-        star.disableBody(true, true);
+    collectStar: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (
+        player,
+        star
+    ) => {
+        (star as Phaser.Physics.Arcade.Sprite).disableBody(true, true);
 
         //  Add and update the score
         this.score += 10;
-        this.scoreText.setText("Score: " + score);
+        this.scoreText.setText("Score: " + this.score);
 
         if (this.stars.countActive(true) === 0) {
             //  A new batch of stars to collect
             this.stars.children.iterate(function (child) {
-                child.enableBody(true, child.x, 0, true, true);
+                (child.body as Phaser.Physics.Arcade.Body).setEnable(true);
+                (child.body as Phaser.Physics.Arcade.Body).reset(
+                    (child.body as Phaser.Physics.Arcade.Body).x,
+                    0
+                );
+
+                return true;
             });
 
             const x =
-                player.x < 400
+                (player as Phaser.Physics.Arcade.Sprite).x < 400
                     ? Phaser.Math.Between(400, 800)
                     : Phaser.Math.Between(0, 400);
 
@@ -176,14 +188,14 @@ export class Game extends Scene {
             bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
             bomb.allowGravity = false;
         }
-    }
-    hitBomb(player, bomb) {
+    };
+    hitBomb: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (player) => {
         this.physics.pause();
 
-        player.setTint(0xff0000);
+        (player as Phaser.Physics.Arcade.Sprite).setTint(0xff0000);
 
-        player.anims.play("turn");
+        (player as Phaser.Physics.Arcade.Sprite).anims.play("turn");
 
         this.gameOver = true;
-    }
+    };
 }
