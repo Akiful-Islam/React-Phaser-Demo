@@ -30,22 +30,22 @@ export class Game extends Scene {
 
     create() {
         //  A simple background for our game
-        this.add.image(400, 300, "sky");
+        this.add.image(360, 640, "sky");
 
         //  The platforms group contains the ground and the 2 ledges we can jump on
         this.platforms = this.physics.add.staticGroup();
 
         //  Here we create the ground.
         //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-        this.platforms.create(400, 568, "ground").setScale(2).refreshBody();
+        this.platforms.create(360, 970, "ground").setScale(2).refreshBody();
 
         //  Now let's create some ledges
-        this.platforms.create(600, 400, "ground");
-        this.platforms.create(50, 250, "ground");
-        this.platforms.create(750, 220, "ground");
+        this.platforms.create(480, 800, "ground");
+        this.platforms.create(40, 650, "ground");
+        this.platforms.create(720, 660, "ground");
 
         // The player and its settings
-        this.player = this.physics.add.sprite(100, 450, "dude");
+        this.player = this.physics.add.sprite(120, 900, "dude");
 
         //  Player physics properties. Give the little guy a slight bounce.
         this.player.setBounce(0.2);
@@ -85,7 +85,7 @@ export class Game extends Scene {
         this.stars = this.physics.add.group({
             key: "star",
             repeat: 5,
-            setXY: { x: 50, y: 0, stepX: Phaser.Math.Between(50, 100) },
+            setXY: { x: 40, y: 380, stepX: Phaser.Math.Between(50, 100) },
         });
 
         this.stars.children.iterate(function (child) {
@@ -99,7 +99,7 @@ export class Game extends Scene {
         this.bombs = this.physics.add.group();
 
         //  The score
-        this.scoreText = this.add.text(16, 16, "score: 0", {
+        this.scoreText = this.add.text(16, 360, "score: 0", {
             fontSize: "32px",
             color: "#000",
         });
@@ -178,7 +178,7 @@ export class Game extends Scene {
                     ? Phaser.Math.Between(400, 800)
                     : Phaser.Math.Between(0, 400);
 
-            const bomb = this.bombs.create(x, 16, "bomb");
+            const bomb = this.bombs.create(x, 360, "bomb");
             bomb.setBounce(1);
             bomb.setCollideWorldBounds(true);
             bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
