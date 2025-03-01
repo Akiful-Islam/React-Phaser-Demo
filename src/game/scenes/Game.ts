@@ -84,8 +84,8 @@ export class Game extends Scene {
         //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
         this.stars = this.physics.add.group({
             key: "star",
-            repeat: 11,
-            setXY: { x: 12, y: 0, stepX: 70 },
+            repeat: 5,
+            setXY: { x: 50, y: 0, stepX: Phaser.Math.Between(50, 100) },
         });
 
         this.stars.children.iterate(function (child) {
@@ -151,10 +151,6 @@ export class Game extends Scene {
         }
     }
 
-    changeScene() {
-        this.scene.start("GameOver");
-    }
-
     collectStar: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (
         player,
         star
@@ -165,7 +161,7 @@ export class Game extends Scene {
         this.score += 10;
         this.scoreText.setText("Score: " + this.score);
 
-        if (this.stars.countActive(true) === 0) {
+        if (this.stars.countActive(true) <= 0) {
             //  A new batch of stars to collect
             this.stars.children.iterate(function (child) {
                 (child.body as Phaser.Physics.Arcade.Body).setEnable(true);
