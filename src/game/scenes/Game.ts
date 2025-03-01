@@ -105,9 +105,9 @@ export class Game extends Scene {
         });
 
         //  Collide the player and the stars with the platforms
-        this.physics.add.collider(this.player, this.platforms);
-        this.physics.add.collider(this.stars, this.platforms);
-        this.physics.add.collider(this.bombs, this.platforms);
+        [this.player, this.stars, this.bombs].forEach((group) => {
+            this.physics.add.collider(group, this.platforms);
+        });
 
         //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
         this.physics.add.overlap(
@@ -155,7 +155,10 @@ export class Game extends Scene {
         player,
         star
     ) => {
-        (star as Phaser.Physics.Arcade.Sprite).disableBody(true, true);
+        const playerSprite = player as Phaser.Physics.Arcade.Sprite;
+        const starSprite = star as Phaser.Physics.Arcade.Sprite;
+
+        starSprite.disableBody(true, true);
 
         //  Add and update the score
         this.score += 10;
@@ -164,17 +167,15 @@ export class Game extends Scene {
         if (this.stars.countActive(true) <= 0) {
             //  A new batch of stars to collect
             this.stars.children.iterate(function (child) {
-                (child.body as Phaser.Physics.Arcade.Body).setEnable(true);
-                (child.body as Phaser.Physics.Arcade.Body).reset(
-                    (child.body as Phaser.Physics.Arcade.Body).x,
-                    0
-                );
+                const childBody = child.body as Phaser.Physics.Arcade.Body;
+                childBody.setEnable(true);
+                childBody.reset(childBody.x, 0);
 
                 return true;
             });
 
             const x =
-                (player as Phaser.Physics.Arcade.Sprite).x < 400
+                playerSprite.x < 400
                     ? Phaser.Math.Between(400, 800)
                     : Phaser.Math.Between(0, 400);
 
@@ -188,9 +189,10 @@ export class Game extends Scene {
     hitBomb: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (player) => {
         this.physics.pause();
 
-        (player as Phaser.Physics.Arcade.Sprite).setTint(0xff0000);
+        const playerSprite = player as Phaser.Physics.Arcade.Sprite;
 
-        (player as Phaser.Physics.Arcade.Sprite).anims.play("turn");
+        playerSprite.setTint(0xff0000);
+        playerSprite.anims.play("turn");
 
         this.gameOver = true;
     };
