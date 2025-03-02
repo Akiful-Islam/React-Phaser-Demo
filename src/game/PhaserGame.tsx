@@ -1,6 +1,8 @@
 import { forwardRef, useEffect, useLayoutEffect, useRef } from "react";
-import StartGame from "./main";
 import { EventBus } from "./EventBus";
+import StartGame from "./main";
+
+// Mostly unchanged
 
 export interface IRefPhaserGame {
     game: Phaser.Game | null;

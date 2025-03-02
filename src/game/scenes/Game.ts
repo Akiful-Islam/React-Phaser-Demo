@@ -1,6 +1,9 @@
 import { Scene } from "phaser";
 
+// Most of the code is unchanged except for the typscriptification
+
 export class Game extends Scene {
+    //Typescript class fields
     camera: Phaser.Cameras.Scene2D.Camera;
     background: Phaser.GameObjects.Image;
     gameText: Phaser.GameObjects.Text;
@@ -10,6 +13,13 @@ export class Game extends Scene {
     bombs: Phaser.Physics.Arcade.Group;
     platforms: Phaser.Physics.Arcade.StaticGroup;
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+    // Just wanted add wasd because I was tired of testing with arrow keys.
+    // Also wanted to see if I could get it to work with WASD
+    wasd: {
+        w: Phaser.Input.Keyboard.Key;
+        a: Phaser.Input.Keyboard.Key;
+        d: Phaser.Input.Keyboard.Key;
+    };
     score = 0;
     gameOver = false;
     scoreText: Phaser.GameObjects.Text;
@@ -82,6 +92,11 @@ export class Game extends Scene {
 
         //  Input Events
         this.cursors = this.input.keyboard!.createCursorKeys();
+        this.wasd = {
+            w: this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.W),
+            a: this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+            d: this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D),
+        };
 
         //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
         this.stars = this.physics.add.group({
@@ -134,6 +149,7 @@ export class Game extends Scene {
     }
 
     update() {
+        // Added a game over scene
         if (this.gameOver) {
             this.add.text(180, 550, "You Died", {
                 fontSize: "4.5rem",
@@ -148,11 +164,11 @@ export class Game extends Scene {
             });
         }
 
-        if (this.cursors.left.isDown) {
+        if (this.cursors.left.isDown || this.wasd.a.isDown) {
             this.player.setVelocityX(-160);
 
             this.player.anims.play("left", true);
-        } else if (this.cursors.right.isDown) {
+        } else if (this.cursors.right.isDown || this.wasd.d.isDown) {
             this.player.setVelocityX(160);
 
             this.player.anims.play("right", true);
@@ -162,7 +178,10 @@ export class Game extends Scene {
             this.player.anims.play("turn");
         }
 
-        if (this.cursors.up.isDown && this.player.body!.touching.down) {
+        if (
+            (this.cursors.up.isDown || this.wasd.w.isDown) &&
+            this.player.body!.touching.down
+        ) {
             this.player.setVelocityY(-330);
         }
     }
