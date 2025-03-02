@@ -1,4 +1,4 @@
-import { buttonConfig } from "../configs/button-config";
+import { buttonConfig } from "../game/configs/button-config";
 
 const Button = () => {
     const { buttonText, buttonStyle } = buttonConfig;

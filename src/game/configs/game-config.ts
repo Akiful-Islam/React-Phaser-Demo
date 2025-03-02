@@ -1,6 +1,6 @@
 import { AUTO } from "phaser";
-import { Game } from "../game/scenes/Game";
-import { Menu } from "../game/scenes/Menu";
+import { Game } from "../scenes/Game";
+import { Menu } from "../scenes/Menu";
 
 const resolution = {
     width: 720,
