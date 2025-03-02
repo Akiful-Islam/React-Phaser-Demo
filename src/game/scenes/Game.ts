@@ -44,7 +44,7 @@ export class Game extends Scene {
         this.platforms.create(40, 650, "ground");
         this.platforms.create(720, 660, "ground");
         this.platforms.create(600, 500, "ground");
-        this.platforms.create(400, 300, "ground");
+        this.platforms.create(400, 330, "ground");
 
         // The player and its settings
         this.player = this.physics.add.sprite(120, 900, "dude");
@@ -86,7 +86,7 @@ export class Game extends Scene {
         //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
         this.stars = this.physics.add.group({
             key: "star",
-            repeat: 9,
+            repeat: 6,
             setXY: {
                 x: Phaser.Math.Between(30, 50),
                 y: Phaser.Math.Between(70, 100),
@@ -135,6 +135,12 @@ export class Game extends Scene {
 
     update() {
         if (this.gameOver) {
+            this.add.text(180, 550, "You Died", {
+                fontSize: "4.5rem",
+                color: "#FF0000",
+                fontStyle: "bold",
+                letterSpacing: 6,
+            });
             return;
         }
 
