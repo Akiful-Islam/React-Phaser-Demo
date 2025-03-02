@@ -12,6 +12,7 @@ export class Menu extends Scene {
         super("Menu");
     }
     preload() {
+        // For some menu niceness
         this.load.image("sky", "assets/sky.png");
         this.load.spritesheet("dude", "assets/dude.png", {
             frameWidth: 32,
@@ -21,6 +22,7 @@ export class Menu extends Scene {
         this.load.image("star", "assets/star.png");
         this.load.image("bomb", "assets/bomb.png");
 
+        // Add button and style
         const { buttonText, buttonStyle } = buttonConfig;
         this.button = document.createElement("button");
         this.button.id = "button";
@@ -34,6 +36,15 @@ export class Menu extends Scene {
     }
 
     create() {
+        //Implement button to start game
+        this.add
+            .dom(360, 700, this.button)
+            .addListener("click")
+            .once("click", () => {
+                this.scene.start("Game");
+            });
+
+        // Add some niceness in the menu
         this.add.image(360, 640, "sky").scaleY = 2.2;
 
         this.add.text(120, 250, "Click to Start", {
@@ -41,13 +52,6 @@ export class Menu extends Scene {
             color: "#FFFFFF",
             fontStyle: "bold",
         });
-
-        this.add
-            .dom(360, 700, this.button)
-            .addListener("click")
-            .once("click", () => {
-                this.scene.start("Game");
-            });
 
         this.add.image(360, 1100, "ground").setScale(10);
         this.add.image(360, 915, "dude");
