@@ -30,9 +30,7 @@ export class Game extends Scene {
 
     create() {
         //  A simple background for our game
-        const background = this.add.image(360, 640, "sky");
-
-        background.scaleY = 2.2;
+        this.add.image(360, 640, "sky").scaleY = 2.2;
 
         //  The platforms group contains the ground and the 2 ledges we can jump on
         this.platforms = this.physics.add.staticGroup();
