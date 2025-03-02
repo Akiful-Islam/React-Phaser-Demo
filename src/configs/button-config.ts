@@ -8,6 +8,6 @@ export const buttonConfig = {
         width: "70%",
         height: "48px",
         borderRadius: "8px",
-        fontSize: "24px",
+        fontSize: "2rem",
     },
 };

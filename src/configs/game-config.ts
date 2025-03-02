@@ -1,5 +1,6 @@
 import { AUTO } from "phaser";
 import { Game } from "../game/scenes/Game";
+import { Menu } from "../game/scenes/Menu";
 
 const resolution = {
     width: 720,
@@ -7,6 +8,9 @@ const resolution = {
 };
 export const config: Phaser.Types.Core.GameConfig = {
     type: AUTO,
+    dom: {
+        createContainer: true,
+    },
     scale: {
         width: resolution.width,
         height: resolution.height,
@@ -22,5 +26,5 @@ export const config: Phaser.Types.Core.GameConfig = {
     },
     parent: "game-container",
     backgroundColor: "#028af8",
-    scene: [Game],
+    scene: [Menu, Game],
 };
