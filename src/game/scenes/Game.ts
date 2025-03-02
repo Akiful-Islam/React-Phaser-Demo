@@ -141,7 +141,11 @@ export class Game extends Scene {
                 fontStyle: "bold",
                 letterSpacing: 6,
             });
-            return;
+
+            this.time.delayedCall(2000, () => {
+                this.scene.start("Menu");
+                this.gameOver = false;
+            });
         }
 
         if (this.cursors.left.isDown) {

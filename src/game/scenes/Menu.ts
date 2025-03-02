@@ -1,9 +1,8 @@
 import { Scene } from "phaser";
-import React from "react";
 import { buttonConfig } from "../../configs/button-config";
 
 export class Menu extends Scene {
-    button: React.FC;
+    button: HTMLButtonElement;
     background: Phaser.GameObjects.Image;
     player: Phaser.Physics.Arcade.Sprite;
     platforms: Phaser.Physics.Arcade.StaticGroup;
@@ -14,28 +13,27 @@ export class Menu extends Scene {
     }
     preload() {
         this.load.image("sky", "assets/sky.png");
+
+        const { buttonText, buttonStyle } = buttonConfig;
+        this.button = document.createElement("button");
+        this.button.id = "button";
+        this.button.innerText = buttonText;
+        this.button.style.color = buttonStyle.color;
+        this.button.style.backgroundColor = buttonStyle.backgroundColor;
+        this.button.style.width = buttonStyle.width;
+        this.button.style.height = buttonStyle.height;
+        this.button.style.borderRadius = buttonStyle.borderRadius;
+        this.button.style.fontSize = buttonStyle.fontSize;
     }
 
     create() {
         this.add.image(360, 640, "sky").scaleY = 2.2;
-        const { buttonText, buttonStyle } = buttonConfig;
-        const button = document.createElement("button");
-        button.id = "button";
-        button.innerText = buttonText;
-        button.style.color = buttonStyle.color;
-        button.style.backgroundColor = buttonStyle.backgroundColor;
-        button.style.width = buttonStyle.width;
-        button.style.height = buttonStyle.height;
-        button.style.borderRadius = buttonStyle.borderRadius;
-        button.style.fontSize = buttonStyle.fontSize;
 
         this.add
-            .dom(360, 600, button)
+            .dom(360, 600, this.button)
             .addListener("click")
             .once("click", () => {
                 this.scene.start("Game");
             });
     }
-
-    update() {}
 }
