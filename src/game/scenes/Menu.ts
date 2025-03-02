@@ -22,7 +22,9 @@ export class Menu extends Scene {
         this.load.image("star", "assets/star.png");
         this.load.image("bomb", "assets/bomb.png");
 
-        // Add button and style
+        // Button and style configuration
+        // I couldn't figure out how to work with react components
+        // So I used document query instead
         const { buttonText, buttonStyle } = buttonConfig;
         this.button = document.createElement("button");
         this.button.id = "button";

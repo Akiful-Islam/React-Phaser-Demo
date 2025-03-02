@@ -1,5 +1,8 @@
 import { buttonConfig } from "../game/configs/button-config";
 
+// I wanted to try and implement a react button component inside phaser canvas
+// But I couldn't really figure it out
+
 const Button = () => {
     const { buttonText, buttonStyle } = buttonConfig;
     return (
