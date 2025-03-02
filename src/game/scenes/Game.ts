@@ -162,6 +162,7 @@ export class Game extends Scene {
                 this.scene.start("Menu");
                 this.gameOver = false;
             });
+            return;
         }
 
         if (this.cursors.left.isDown || this.wasd.a.isDown) {
